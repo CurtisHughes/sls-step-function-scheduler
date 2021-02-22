@@ -94,7 +94,7 @@ In order to provision the resources for this project, run the following command:
 Once you have deployed the project, you can navigate to the AWS Step Function console, find the corresponding state machine, and start a new execution.  
 
 Available state machines:
-* [step-function-scheduler-lambda-task](###step-function-scheduler-lambda-task)
+* [step-function-scheduler-lambda-task](#step-function-scheduler-lambda-task)
 
 ### step-function-scheduler-lambda-task
 <img src="./assets/step-function-scheduler-lambda-task.png" width="300px" />
