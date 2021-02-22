@@ -1,8 +1,6 @@
 # Serverless Step Function Scheduler
 This project is meant to serve as a bare bones template for scheduling tasks via AWS Step Functions. It is not a fully fleshed out solution and does not contain many of the added benefits of using step functions (ie. retry/error handling, parallel executions, multiple integration support, etc).
 
-It utilizes the [Serverless framework](https://www.serverless.com/) to provision infrastructure and handle deployments. For detailed instructions on Serverless, please refer to the official [documentation](https://www.serverless.com/framework/docs/providers/aws/).
-
 **CAUTION**: This is an advanced use case implementation for scheduling jobs in AWS. Other implementations might be preferable depending on your use case (ie. CloudWatch Events, AWS Batch, ECS Scheduled Tasks, DynamoDB TTL, Pinpoint).
 
 For an in depth explanation of this implementation, as well as the pros and cons associated with it, please read through [Scheduling Jobs in AWS with Step Functions](https://medium.com/@curtishughes017/scheduling-jobs-in-aws-with-step-functions-41bc80cabe8f).
@@ -16,6 +14,7 @@ Example use cases:
 - Need various AWS service integration support (ex. Lambda, SNS, SQS, CodeBuild, [etc](https://docs.aws.amazon.com/step-functions/latest/dg/connect-supported-services.html))
 
 ## Installation/deployment instructions
+This project utilizes the [Serverless framework](https://www.serverless.com/) to provision infrastructure and handle deployments. For detailed instructions on Serverless, please refer to the official [documentation](https://www.serverless.com/framework/docs/providers/aws/).
 
 Depending on your preferred package manager, follow the instructions below to deploy your project.
 
@@ -95,7 +94,7 @@ In order to provision the resources for this project, run the following command:
 Once you have deployed the project, you can navigate to the AWS Step Function console, find the corresponding state machine, and start a new execution.  
 
 Available state machines:
-* [step-function-scheduler-lambda-task](###-step-function-scheduler-lambda-task)
+* [step-function-scheduler-lambda-task](###step-function-scheduler-lambda-task)
 
 ### step-function-scheduler-lambda-task
 <img src="./assets/step-function-scheduler-lambda-task.png" width="300px" />
