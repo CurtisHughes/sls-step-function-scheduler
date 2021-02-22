@@ -1,0 +1,75 @@
+{
+    "Comment": "Schedule Lambda Function Executions",
+    "StartAt": "Wait Till X to start",
+    "States": {
+        "Wait Till X to start": {
+            "Type": "Wait",
+            "TimestampPath": "$.startDateTime",
+            "Next": "Invoke Lambda task"
+        },
+        "Invoke Lambda task": {
+            "Type": "Task",
+            "Resource": "arn:aws:states:::lambda:invoke",
+            "ResultPath": "$.null",
+            "Parameters": {
+                "FunctionName": "${TaskFunctionName}",
+                "InvocationType": "Event",
+                "Payload": {
+                    "context.$": "$.context"
+                }
+            },
+            "Next": "Calculate next start time"
+        },
+        "Calculate next start time": {
+            "Type": "Task",
+            "Resource": "arn:aws:states:::lambda:invoke",
+            "ResultPath": "$.next",
+            "Parameters": {
+                "FunctionName": "${CalculatorFunctionName}",
+                "Payload": {
+                    "execution": {
+                        "name.$": "$$.Execution.Name",
+                        "taskStartDateTime.$": "$.startDateTime",
+                        "executionStartDateTime.$": "$$.Execution.StartTime"
+                    },
+                    "job": {
+                        "id.$": "$.id",
+                        "frequency.$": "$.frequency",
+                        "endDateTime.$": "$.endDateTime"
+                    }
+                }
+            },
+            "Next": "Continue?"
+        },
+        "Continue?": {
+            "Type": "Choice",
+            "Choices": [
+                {
+                    "Variable": "$.next.Payload.continue",
+                    "BooleanEquals": true,
+                    "Next": "Start a new Execution"
+                }
+            ],
+            "Default": "Complete"
+        },
+        "Start a new Execution": {
+            "Type": "Task",
+            "Resource": "arn:aws:states:::states:startExecution",
+            "Parameters": {
+                "StateMachineArn.$": "$$.StateMachine.Id",
+                "Name.$": "$.next.Payload.name",
+                "Input": {
+                    "id.$": "$.id",
+                    "startDateTime.$": "$.next.Payload.taskStartDateTime",
+                    "endDateTime.$": "$.endDateTime",
+                    "frequency.$": "$.frequency",
+                    "context.$": "$.context"
+                }
+            },
+            "End": true
+        },
+        "Complete": {
+            "Type": "Succeed"
+        }
+    }
+}

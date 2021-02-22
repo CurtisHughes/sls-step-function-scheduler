@@ -1,0 +1,14 @@
+{
+  "job": {
+    "id": "job_1",
+    "startDateTime": "1999-01-01T00:00:00.000Z",
+    "endDateTime": "9999-01-01T00:00:00.000Z",
+    "frequency": {
+      "minutes": 15
+    }
+  },
+  "execution": {
+    "name": "job_1_20210218T000000",
+    "taskStartDateTime": "2021-02-18T00:00:00.000Z"
+  }
+}
